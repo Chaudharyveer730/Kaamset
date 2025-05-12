@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+
+{% block title %}KaamSet - Confirm Action{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 col-lg-4 mx-auto">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h2 class="mb-0"><i class="fas fa-shield-alt me-2"></i>Confirm Action</h2>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong>{{ action_type|capitalize }}</strong> requires confirmation.
+                    {% if action_type == 'delete' %}
+                    <p class="mb-0 mt-2">You are about to delete the worker: <strong>{{ worker.name }}</strong></p>
+                    {% endif %}
+                </div>
+                
+                <form method="POST" action="{{ action_url }}">
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Admin Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                        <div class="form-text">Enter your admin password to confirm this action.</div>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-check me-2"></i>Confirm {{ action_type|capitalize }}
+                        </button>
+                        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-secondary">
+                            <i class="fas fa-times me-2"></i>Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

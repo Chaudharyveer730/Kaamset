@@ -1,0 +1,89 @@
+{% extends 'layout.html' %}
+
+{% block title %}KaamSet - Edit Worker{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h2 class="mb-0"><i class="fas fa-user-edit me-2"></i>Edit Worker Details</h2>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('admin_update_worker', worker_id=worker_id) }}" enctype="multipart/form-data">
+                    <!-- Name Field -->
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="name" name="name" value="{{ worker.name }}" required>
+                    </div>
+
+                    <!-- Primary Skill Field -->
+                    <div class="mb-3">
+                        <label for="skill" class="form-label">Primary Skill <span class="text-danger">*</span></label>
+                        <select class="form-select" id="skill" name="skill" required>
+                            <option value="Plumbing" {% if worker.skill == 'Plumbing' %}selected{% endif %}>Plumbing</option>
+                            <option value="Electrician" {% if worker.skill == 'Electrician' %}selected{% endif %}>Electrician</option>
+                            <option value="Flooring" {% if worker.skill == 'Flooring' %}selected{% endif %}>Flooring</option>
+                            <option value="Cleaning" {% if worker.skill == 'Cleaning' %}selected{% endif %}>Cleaning</option>
+                            <option value="Painting" {% if worker.skill == 'Painting' %}selected{% endif %}>Painting</option>
+                            <option value="Others" {% if worker.skill == 'Others' %}selected{% endif %}>Others</option>
+                        </select>
+                    </div>
+
+                    <!-- Location Field -->
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" class="form-control" id="location" name="location" value="{{ worker.location or '' }}">
+                    </div>
+
+                    <!-- Experience Field -->
+                    <div class="mb-3">
+                        <label for="experience" class="form-label">Experience (Years)</label>
+                        <input type="number" class="form-control" id="experience" name="experience" min="0" max="50" value="{{ worker.experience or '' }}">
+                    </div>
+
+                    <!-- Contact Field (required) -->
+                    <div class="mb-3">
+                        <label for="contact" class="form-label">Contact Number <span class="text-danger">*</span></label>
+                        <input type="tel" class="form-control" id="contact" name="contact" value="{{ worker.contact or '' }}" required>
+                        <div class="form-text">Phone number with country code for WhatsApp (e.g., 91xxxxxxxxxx)</div>
+                    </div>
+
+                    <!-- Description Field -->
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Work Description <span class="text-danger">*</span></label>
+                        <textarea class="form-control" id="description" name="description" rows="4" required>{{ worker.description }}</textarea>
+                    </div>
+
+                    <!-- Current Image -->
+                    {% if worker.image %}
+                    <div class="mb-3">
+                        <label class="form-label">Current Image</label>
+                        <div class="mb-2">
+                            <img src="{{ worker.image }}" alt="Current image" class="img-thumbnail" style="max-height: 200px;">
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- New Image Upload Field -->
+                    <div class="mb-4">
+                        <label for="image" class="form-label">Upload New Image (optional)</label>
+                        <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                        <div class="form-text">Leave empty to keep the current image.</div>
+                    </div>
+
+                    <!-- Submit Buttons -->
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i>Save Changes
+                        </button>
+                        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-secondary">
+                            <i class="fas fa-times me-2"></i>Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

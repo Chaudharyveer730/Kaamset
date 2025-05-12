@@ -1,0 +1,152 @@
+{% extends 'layout.html' %}
+
+{% block title %}KaamSet - Worker Registration{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h2 class="mb-0"><i class="fas fa-user-plus me-2"></i>Register as a Skilled Worker</h2>
+            </div>
+            <div class="card-body">
+                <p class="lead mb-4">
+                    Complete the form below to showcase your skills and find work opportunities. 
+                    Registered workers will be visible to potential clients looking for services.
+                </p>
+
+                <!-- Alert container for JavaScript alerts -->
+                <div id="alert-container"></div>
+                
+                <form id="worker-registration-form" method="POST" action="{{ url_for('submit') }}" enctype="multipart/form-data" class="needs-validation" novalidate>
+                    <!-- Name Field -->
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="invalid-feedback">
+                            Please provide your name.
+                        </div>
+                    </div>
+
+                    <!-- Primary Skill Field -->
+                    <div class="mb-3">
+                        <label for="skill" class="form-label">Primary Skill <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-hammer"></i></span>
+                            <select class="form-select" id="skill" name="skill" required>
+                                <option value="" selected disabled>Select your primary skill</option>
+                                <option value="Plumbing">Plumbing</option>
+                                <option value="Electrician">Electrician</option>
+                                <option value="Flooring">Flooring</option>
+                                <option value="Cleaning">Cleaning</option>
+                                <option value="Painting">Painting</option>
+                                <option value="Others">Others</option>
+                            </select>
+                        </div>
+                        <div class="invalid-feedback">
+                            Please select your primary skill.
+                        </div>
+                    </div>
+
+                    <!-- Location Field -->
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Location</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                            <input type="text" class="form-control" id="location" name="location" placeholder="City, State">
+                        </div>
+                    </div>
+
+                    <!-- Experience Field -->
+                    <div class="mb-3">
+                        <label for="experience" class="form-label">Experience (Years)</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                            <input type="number" class="form-control" id="experience" name="experience" min="0" max="50">
+                        </div>
+                    </div>
+
+                    <!-- Contact Field (now required) -->
+                    <div class="mb-3">
+                        <label for="contact" class="form-label">Contact Number <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                            <input type="tel" class="form-control" id="contact" name="contact" placeholder="Phone number with WhatsApp" required>
+                        </div>
+                        <div class="form-text">Enter phone number with country code for WhatsApp (e.g., 91xxxxxxxxxx)</div>
+                        <div class="invalid-feedback">
+                            Please provide a contact number for clients to reach you.
+                        </div>
+                    </div>
+
+                    <!-- Description Field -->
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Work Description <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-edit"></i></span>
+                            <textarea class="form-control" id="description" name="description" rows="4" required 
+                                      placeholder="Describe your skills, services offered, and any specializations"></textarea>
+                        </div>
+                        <div class="invalid-feedback">
+                            Please provide a description of your services.
+                        </div>
+                    </div>
+
+                    <!-- Image Upload Field -->
+                    <div class="mb-4">
+                        <label for="image" class="form-label">Upload Sample Image <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-image"></i></span>
+                            <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+                        </div>
+                        <div class="form-text">Upload a sample of your work (max 16MB).</div>
+                        <div class="invalid-feedback">
+                            Please upload a sample image of your work.
+                        </div>
+                        <!-- Image preview container -->
+                        <div id="image-preview-container" class="d-none"></div>
+                    </div>
+
+                    <!-- Submit and Reset Buttons -->
+                    <div class="d-grid gap-2 d-md-flex">
+                        <button type="submit" class="btn btn-primary btn-lg flex-grow-1">
+                            <i class="fas fa-paper-plane me-2"></i>Submit Registration
+                        </button>
+                        <button type="button" id="reset-form" class="btn btn-outline-secondary btn-lg">
+                            <i class="fas fa-undo me-2"></i>Reset Form
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Form validation script
+(function () {
+    'use strict'
+    
+    // Fetch all forms we want to apply validation to
+    var forms = document.querySelectorAll('.needs-validation')
+    
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                
+                form.classList.add('was-validated')
+            }, false)
+        })
+})()
+</script>
+{% endblock %}
