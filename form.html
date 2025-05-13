@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register Worker</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .form-box {
+            background: white;
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px #ccc;
+        }
+        input, select, textarea {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background: #2196f3;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 6px;
+        }
+        a {
+            display: block;
+            margin-top: 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-box">
+        <h2>Register Worker</h2>
+        <form method="POST" action="/submit" enctype="multipart/form-data">
+            <input type="text" name="name" placeholder="Name" required>
+            <select name="skill" required>
+                <option value="">-- Select Skill --</option>
+                <option value="Plumbing">Plumbing</option>
+                <option value="Electrician">Electrician</option>
+                <option value="Flooring">Flooring</option>
+                <option value="Cleaning">Cleaning</option>
+                <option value="Painting">Painting</option>
+                <option value="Others">Others</option>
+            </select>
+            <textarea name="description" placeholder="Short description" required></textarea>
+            <input type="text" name="phone" placeholder="Phone Number" required>
+            <input type="file" name="image" required>
+            <button type="submit">Submit</button>
+        </form>
+        <a href="/workers">View Workers</a>
+    </div>
+</body>
+</html>

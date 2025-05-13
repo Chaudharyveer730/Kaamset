@@ -1,90 +1,22 @@
-{% extends 'layout.html' %}
-
-{% block title %}KaamSet - Find Workers{% endblock %}
-
-{% block content %}
-<div class="card shadow-sm mb-4">
-    <div class="card-header bg-primary text-white">
-        <h2 class="mb-0"><i class="fas fa-search me-2"></i>Find Skilled Workers</h2>
-    </div>
-    <div class="card-body">
-        <form action="{{ url_for('search') }}" method="GET" class="mb-4">
-            <div class="row g-2 align-items-center">
-                <div class="col-md-6">
-                    <label for="skill-filter" class="form-label">Filter by Skill</label>
-                    <select class="form-select" id="skill-filter" name="skill" onchange="this.form.submit()">
-                        <option value="All" {% if selected_skill == 'All' %}selected{% endif %}>All Skills</option>
-                        <option value="Plumbing" {% if selected_skill == 'Plumbing' %}selected{% endif %}>Plumbing</option>
-                        <option value="Electrician" {% if selected_skill == 'Electrician' %}selected{% endif %}>Electrician</option>
-                        <option value="Flooring" {% if selected_skill == 'Flooring' %}selected{% endif %}>Flooring</option>
-                        <option value="Cleaning" {% if selected_skill == 'Cleaning' %}selected{% endif %}>Cleaning</option>
-                        <option value="Painting" {% if selected_skill == 'Painting' %}selected{% endif %}>Painting</option>
-                        <option value="Others" {% if selected_skill == 'Others' %}selected{% endif %}>Others</option>
-                    </select>
-                </div>
-                <div class="col-md-6 mt-auto">
-                    <a href="{{ url_for('home') }}" class="btn btn-outline-primary">
-                        <i class="fas fa-user-plus me-2"></i>Register as a Worker
-                    </a>
-                </div>
-            </div>
-        </form>
-
-        <hr>
-
-        {% if workers|length > 0 %}
-            <div class="row row-cols-1 row-cols-md-2 g-4">
-                {% for worker in workers %}
-                    <div class="col">
-                        <div class="card h-100 shadow-sm">
-                            {% if worker.image %}
-                                <div class="card-img-top worker-image-container">
-                                    <img src="{{ worker.image }}" class="worker-image" alt="Work sample by {{ worker.name }}">
-                                </div>
-                            {% else %}
-                                <div class="card-img-top worker-image-container bg-light d-flex align-items-center justify-content-center">
-                                    <i class="fas fa-image fa-3x text-muted"></i>
-                                </div>
-                            {% endif %}
-                            <div class="card-body">
-                                <h5 class="card-title">{{ worker.name }}</h5>
-                                <div class="mb-2">
-                                    <span class="badge bg-primary">{{ worker.skill }}</span>
-                                    {% if worker.experience %}
-                                        <span class="badge bg-secondary">{{ worker.experience }} years experience</span>
-                                    {% endif %}
-                                </div>
-                                {% if worker.location %}
-                                    <p class="card-text mb-2">
-                                        <i class="fas fa-map-marker-alt me-2"></i>{{ worker.location }}
-                                    </p>
-                                {% endif %}
-                                <p class="card-text">{{ worker.description }}</p>
-                            </div>
-                            {% if worker.contact %}
-                                <div class="card-footer d-flex gap-2">
-                                    <a href=<p>Phone: {{ w.phone }}</p>
-<a href="https://wa.me/91{{ w.phone }}" target="_blank" style="text-decoration:none;">
-  <button style="background:#25D366;color:white;padding:6px 12px;border:none;border-radius:6px;">
-    Chat on WhatsApp
-  </button>
-</a>class="btn btn-outline-success btn-sm flex-grow-1">
-                                        <i class="fas fa-phone me-2"></i>Call
-                                    </a>
-                                    <a href="https://wa.me/{{ worker.contact }}" target="_blank" class="btn btn-success btn-sm flex-grow-1">
-                                        <i class="fab fa-whatsapp me-2"></i>WhatsApp
-                                    </a>
-                                </div>
-                            {% endif %}
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <div class="alert alert-info" role="alert">
-                <i class="fas fa-info-circle me-2"></i>No workers found. {% if selected_skill %}Try selecting a different skill category.{% endif %}
-            </div>
-        {% endif %}
-    </div>
-</div>
-{% endblock %}
+<!DOCTYPE html>
+<html>
+<head><title>Workers List</title></head>
+<body style="font-family:sans-serif; background:#f5f5f5; padding:20px;">
+    <h2>Registered Workers</h2>
+    {% for w in workers %}
+        <div style="background:white; border:1px solid #ccc; padding:10px; margin:10px; border-radius:10px;">
+            <h3>{{ w.name }} ({{ w.skill }})</h3>
+            <p>{{ w.description }}</p>
+            <p>Phone: {{ w.phone }}</p>
+            <a href="https://wa.me/91{{ w.phone }}" target="_blank" style="text-decoration:none;">
+              <button style="background:#25D366;color:white;padding:6px 12px;border:none;border-radius:6px;">
+                Chat on WhatsApp
+              </button>
+            </a>
+            <br><br>
+            <img src="{{ w.image }}" width="200" style="border-radius:10px;">
+        </div>
+    {% endfor %}
+    <a href="/">Back to Form</a>
+</body>
+</html>
